@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/tree.min.js"></script>
+    <script src="js/panolens.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        a:link, a:visited {
+            color: #bdc3c7;
+        }
+
+        .credit {
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            padding: 20px 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+  const viewerOptions = {
+    viewIndicator: true,
+    cameraFov: 80,
+    autoRotate: true,
+    autoRotateSpeed: 1,
+  };
+  const panoramaFoyer = new PANOLENS.ImagePanorama('panorams/foyer.jpg');
+  const panoramaLivingRoom = new PANOLENS.ImagePanorama('panorams/livingRoom.jpg');
+  const panoramaDiningRoom = new PANOLENS.ImagePanorama('panorams/diningRoom.jpg');
+
+  panoramaFoyer.link(panoramaLivingRoom, new THREE.Vector3(554, -898, -2200));  // x, y, z
+  panoramaFoyer.link(panoramaDiningRoom, new THREE.Vector3(4200, -391, 2693));
+
+  panoramaLivingRoom.link(panoramaFoyer, new THREE.Vector3(-891, -1731, 4597));
+  panoramaDiningRoom.link(panoramaFoyer, new THREE.Vector3(4767, -701, 1366));
+
+
+  const viewer = new PANOLENS.Viewer(viewerOptions);
+  viewer.add(
+    panoramaFoyer,
+    panoramaLivingRoom,
+    panoramaDiningRoom,
+  );
+
+
+</script>
+
+</body>
+</html>
